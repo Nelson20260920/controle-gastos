@@ -1,0 +1,101 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#123d6b"><title>Controle de Gastos</title>
+<link rel="manifest" href="./manifest.json"><link rel="apple-touch-icon" href="./icon.svg">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#071f43,#17619b);color:#fff;min-height:100vh}.app{max-width:700px;margin:auto;padding:12px}
+header{margin-bottom:12px}h1{font-size:25px;margin:0}.sub{font-size:13px;opacity:.8;margin-top:3px}.card{background:rgba(5,29,61,.92);border:1px solid #286596;border-radius:18px;padding:15px;margin-bottom:12px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.tab{padding:13px;border:0;border-radius:12px;background:#164d7f;color:#fff;font-weight:800;font-size:16px}.tab.active{background:#1687e8}
+label{display:block;font-size:13px;opacity:.85;margin:10px 0 5px}input,select{width:100%;padding:13px;border-radius:11px;border:1px solid #4c83ad;background:#f7fbff;color:#111;font-size:17px}.amount{font-size:25px;font-weight:800}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:7px}.cat{padding:12px 5px;border:1px solid #316b99;border-radius:11px;background:#164b7c;color:#fff;font-weight:700}.cat.active{background:#1687e8;outline:2px solid #72c4ff}
+.primary{width:100%;margin-top:14px;padding:15px;border:0;border-radius:13px;background:#20b85a;color:#fff;font-size:18px;font-weight:900}
+.total{text-align:center;padding:14px;background:#0b3d69;border-radius:14px;margin-bottom:12px}.total small{display:block;opacity:.8}.total strong{display:block;font-size:29px;margin-top:4px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:11px 3px;border-bottom:1px solid #285678}.row:last-child{border-bottom:0}.row b{display:block}.muted{opacity:.7;font-size:12px}.summarycat{display:flex;justify-content:space-between;padding:10px 4px;border-bottom:1px solid #285678}.summarycat:last-child{border-bottom:0}
+.danger{background:#a93434;color:#fff;border:0;border-radius:9px;padding:6px 9px}.empty{text-align:center;opacity:.7;padding:25px}@media(max-width:500px){.cats{grid-template-columns:repeat(2,1fr)}}
+
+.category-fields{margin:7px 0 12px}
+.category-row{display:grid;grid-template-columns:155px 150px minmax(120px,1fr);align-items:center;gap:6px;padding:6px 0}
+.category-row>span{font-weight:700;white-space:nowrap}
+.category-row>div{display:flex;align-items:center;gap:4px}
+.cat-amount{width:115px;padding:9px 8px;border-radius:9px;border:1px solid #4c83ad;background:#f7fbff;color:#111;font-size:17px;text-align:right}
+.cat-desc{width:100%;min-width:110px;padding:9px 8px;border-radius:9px;border:1px solid #bbb;background:#fff;font-size:15px}
+@media(max-width:700px){.category-row{grid-template-columns:145px 120px 1fr}.cat-amount{width:90px}.cat-desc{min-width:90px}}
+@media(max-width:500px){.category-row{grid-template-columns:140px 105px 1fr}.cat-amount{width:78px}.cat-desc{min-width:75px;font-size:14px}}
+
+.category-fields{margin:7px 0 12px}
+.category-row{display:grid;grid-template-columns:155px 135px minmax(130px,1fr) 92px;align-items:center;gap:6px;padding:6px 0}
+.category-row>span{font-weight:700;white-space:nowrap}
+.value-wrap{display:flex;align-items:center;gap:4px}
+.cat-amount{width:105px;padding:9px 8px;border-radius:9px;border:1px solid #4c83ad;background:#f7fbff;color:#111;font-size:16px;text-align:right}
+.cat-desc{width:100%;min-width:100px;padding:9px 8px;border-radius:9px;border:1px solid #bbb;background:#fff;font-size:14px}
+.row-save{padding:9px 7px;border:0;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px;white-space:nowrap}
+@media(max-width:800px){.category-row{grid-template-columns:145px 115px minmax(110px,1fr) 82px}.cat-amount{width:88px}.row-save{font-size:11px;padding:9px 5px}}
+@media(max-width:600px){.category-row{grid-template-columns:135px 105px minmax(90px,1fr) 76px}.cat-amount{width:78px}.cat-desc{font-size:13px;min-width:70px}.row-save{font-size:10px}}
+.summary-back{margin:0 0 12px}
+#backToEntry{width:100%;padding:11px 14px;border:0;border-radius:9px;cursor:pointer;font-weight:700;font-size:14px}
+</style></head><body><div class="app">
+<header><h1>💰 Controle de Gastos</h1><div class="sub">Seu controle financeiro pessoal</div></header>
+<div class="tabs"><button class="tab active" id="tabEntry">➕ Novo gasto</button><button class="tab" id="tabSummary">📊 Resumo</button></div>
+<section id="entryScreen"><div class="card">
+<label>Data</label><input type="date" id="date"><label>Gastos por categoria</label>
+<div class="category-fields" id="categoryFields">
+  <div class="category-row"><span>🍚 Alimentação:</span><div><b>¥</b><input class="cat-amount" data-cat="Alimentação" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Alimentação" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Alimentação">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>🚗 Transporte:</span><div><b>¥</b><input class="cat-amount" data-cat="Transporte" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Transporte" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Transporte">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>🏠 Casa:</span><div><b>¥</b><input class="cat-amount" data-cat="Casa" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Casa" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Casa">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>💡 Contas:</span><div><b>¥</b><input class="cat-amount" data-cat="Contas" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Contas" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Contas">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>🛒 Compras:</span><div><b>¥</b><input class="cat-amount" data-cat="Compras" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Compras" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Compras">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>🏥 Saúde:</span><div><b>¥</b><input class="cat-amount" data-cat="Saúde" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Saúde" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Saúde">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>🎮 Lazer:</span><div><b>¥</b><input class="cat-amount" data-cat="Lazer" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Lazer" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Lazer">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>💸 Remessa:</span><div><b>¥</b><input class="cat-amount" data-cat="Remessa" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Remessa" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Remessa">REGISTRAR</button></div>
+</div>
+  <div class="category-row"><span>📦 Outros:</span><div><b>¥</b><input class="cat-amount" data-cat="Outros" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Outros" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Outros">REGISTRAR</button></div>
+</div>
+</div>
+<input id="description" type="hidden" value="">
+</div>
+<div class="card"><h3 style="margin-top:0">Lançamentos de hoje</h3><div id="todayList"></div></div></section>
+<section id="summaryScreen" style="display:none"><div class="summary-back"><button type="button" id="backToEntry">⬅️ VOLTAR PARA NOVO GASTO</button></div><div class="card"><label>Mês</label><input type="month" id="month"><div class="total"><small>Total do mês</small><strong id="monthTotal">¥0</strong></div><div id="monthSummary"></div></div>
+<div class="card"><label>Ano</label><select id="year"></select><div class="total"><small>Total do ano</small><strong id="yearTotal">¥0</strong></div><div id="yearSummary"></div></div></section></div>
+<script>
+const CATS=[["🍚","Alimentação"],["🚗","Transporte"],["🏠","Casa"],["💡","Contas"],["🛒","Compras"],["🏥","Saúde"],["🎮","Lazer"],["💸","Remessa"],["📦","Outros"]];
+let selected="Alimentação";const key="controle_gastos_v1";let expenses=JSON.parse(localStorage.getItem(key)||"[]");const $=id=>document.getElementById(id);
+function money(n){return "¥"+Number(n).toLocaleString("ja-JP",{maximumFractionDigits:0})}function saveData(){localStorage.setItem(key,JSON.stringify(expenses))}
+function todayISO(){let d=new Date();return d.toISOString().slice(0,10)}function monthISO(){return todayISO().slice(0,7)}
+function renderCats(){$("cats").innerHTML=CATS.map(c=>`<button class="cat ${c[1]===selected?"active":""}" data-cat="${c[1]}">${c[0]} ${c[1]}</button>`).join("");document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{selected=b.dataset.cat;renderCats()})}
+function renderToday(){const date=$("date").value,list=expenses.filter(e=>e.date===date).sort((a,b)=>b.id-a.id);$("todayList").innerHTML=list.length?list.map(e=>`<div class="row"><div><b>${e.icon} ${e.category}</b><span class="muted">${e.description||""}</span></div><div><b>${money(e.amount)}</b><button class="danger" onclick="removeExpense(${e.id})">Excluir</button></div></div>`).join(""):"<div class='empty'>Nenhum gasto registrado nesta data.</div>"}
+window.removeExpense=id=>{if(confirm("Excluir este gasto?")){expenses=expenses.filter(e=>e.id!==id);saveData();renderToday();renderSummary()}};
+document.querySelectorAll(".row-save").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const cat=btn.dataset.cat;
+    const amountEl=document.querySelector('.cat-amount[data-cat="'+CSS.escape(cat)+'"]');
+    const descEl=document.querySelector('.cat-desc[data-cat="'+CSS.escape(cat)+'"]');
+    const amount=Number(amountEl.value||0);
+    if(!amount||amount<=0){alert("Digite um valor para "+cat+".");amountEl.focus();return}
+    const catInfo=CATS.find(c=>c[1]===cat);
+    expenses.push({id:Date.now(),date:$("date").value,amount,category:cat,icon:catInfo[0],description:(descEl.value||"").trim()});
+    saveData(); amountEl.value=""; descEl.value="";
+    renderToday(); renderSummary(); amountEl.focus();
+  });
+});
+$("date").onchange=renderToday;
+function renderSummary(){const month=$("month").value,year=$("year").value,m=expenses.filter(e=>e.date.startsWith(month)),y=expenses.filter(e=>e.date.startsWith(year)),group=a=>CATS.map(c=>({icon:c[0],cat:c[1],total:a.filter(e=>e.category===c[1]).reduce((s,e)=>s+e.amount,0)})).filter(x=>x.total>0);$("monthTotal").textContent=money(m.reduce((s,e)=>s+e.amount,0));$("yearTotal").textContent=money(y.reduce((s,e)=>s+e.amount,0));$("monthSummary").innerHTML=group(m).map(x=>`<div class="summarycat"><span>${x.icon} ${x.cat}</span><b>${money(x.total)}</b></div>`).join("")||"<div class='empty'>Nenhum gasto neste mês.</div>";$("yearSummary").innerHTML=group(y).map(x=>`<div class="summarycat"><span>${x.icon} ${x.cat}</span><b>${money(x.total)}</b></div>`).join("")||"<div class='empty'>Nenhum gasto neste ano.</div>"}
+$("tabEntry").onclick=()=>{$("entryScreen").style.display="block";$("summaryScreen").style.display="none";$("tabEntry").classList.add("active");$("tabSummary").classList.remove("active");renderToday()};
+$("tabSummary").onclick=()=>{$("entryScreen").style.display="none";$("summaryScreen").style.display="block";$("tabSummary").classList.add("active");$("tabEntry").classList.remove("active");renderSummary()};
+$("backToEntry").onclick=()=>{
+  $("summaryScreen").style.display="none";
+  $("entryScreen").style.display="block";
+  $("tabSummary").classList.remove("active");
+  $("tabEntry").classList.add("active");
+  renderToday();
+  window.scrollTo(0,0);
+};
+$("date").value=todayISO();$("month").value=monthISO();const currentYear=Number(todayISO().slice(0,4));for(let y=currentYear-5;y<=currentYear+2;y++)$("year").insertAdjacentHTML("beforeend",`<option>${y}</option>`);$("year").value=currentYear;renderToday();renderSummary();
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
+</script></body></html>
