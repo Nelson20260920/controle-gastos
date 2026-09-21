@@ -13,28 +13,19 @@ label{display:block;font-size:13px;opacity:.85;margin:10px 0 5px}input,select{wi
 .row{display:flex;justify-content:space-between;gap:10px;padding:11px 3px;border-bottom:1px solid #285678}.row:last-child{border-bottom:0}.row b{display:block}.muted{opacity:.7;font-size:12px}.summarycat{display:flex;justify-content:space-between;padding:10px 4px;border-bottom:1px solid #285678}.summarycat:last-child{border-bottom:0}
 .danger{background:#a93434;color:#fff;border:0;border-radius:9px;padding:6px 9px}.empty{text-align:center;opacity:.7;padding:25px}@media(max-width:500px){.cats{grid-template-columns:repeat(2,1fr)}.tabs3 .tab{font-size:13px;padding:11px 3px}}
 
-.category-fields{margin:7px 0 12px}
-.category-row{display:grid;grid-template-columns:155px 150px minmax(120px,1fr);align-items:center;gap:6px;padding:6px 0}
-.category-row>span{font-weight:700;white-space:nowrap}
-.category-row>div{display:flex;align-items:center;gap:4px}
-.cat-amount{width:115px;padding:9px 8px;border-radius:9px;border:1px solid #4c83ad;background:#f7fbff;color:#111;font-size:17px;text-align:right}
-.cat-desc{width:100%;min-width:110px;padding:9px 8px;border-radius:9px;border:1px solid #bbb;background:#fff;font-size:15px}
-@media(max-width:700px){.category-row{grid-template-columns:145px 120px 1fr}.cat-amount{width:90px}.cat-desc{min-width:90px}}
-@media(max-width:500px){.category-row{grid-template-columns:140px 105px 1fr}.cat-amount{width:78px}.cat-desc{min-width:75px;font-size:14px}}
-
-.category-fields{margin:7px 0 12px}
-.category-row{display:grid;grid-template-columns:155px 135px minmax(130px,1fr) 92px;align-items:center;gap:6px;padding:6px 0}
-.category-row>span{font-weight:700;white-space:nowrap}
-.value-wrap{display:flex;align-items:center;gap:4px}
-.cat-amount{width:105px;padding:9px 8px;border-radius:9px;border:1px solid #4c83ad;background:#f7fbff;color:#111;font-size:16px;text-align:right}
-.cat-desc{width:100%;min-width:100px;padding:9px 8px;border-radius:9px;border:1px solid #bbb;background:#fff;font-size:14px}
-.row-save{padding:9px 7px;border:0;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px;white-space:nowrap}
-@media(max-width:800px){.category-row{grid-template-columns:145px 115px minmax(110px,1fr) 82px}.cat-amount{width:88px}.row-save{font-size:11px;padding:9px 5px}}
-@media(max-width:600px){.category-row{grid-template-columns:112px 78px minmax(70px,1fr) 68px;gap:4px}.cat-amount{width:72px}.cat-desc{font-size:13px;min-width:60px}.row-save{font-size:9px;padding:9px 3px;overflow:hidden}}
+ .category-fields{margin:7px 0 12px}
+.category-row{display:grid;grid-template-columns:145px 105px minmax(0,1fr) 82px;align-items:center;gap:5px;padding:6px 0}
+.category-row>span{font-weight:700;white-space:nowrap;min-width:0}
+.value-wrap{display:flex;align-items:center;gap:3px;min-width:0}
+.cat-amount{width:100%;min-width:0;padding:9px 6px;border-radius:9px;border:1px solid #4c83ad;background:#f7fbff;color:#111;font-size:16px;text-align:right}
+.cat-desc{width:100%;min-width:0;padding:9px 6px;border-radius:9px;border:1px solid #bbb;background:#fff;font-size:14px}
+.row-save{width:100%;min-width:0;padding:9px 3px;border:0;border-radius:8px;cursor:pointer;font-weight:700;font-size:11px;white-space:nowrap;overflow:hidden}
+@media(max-width:600px){.category-row{grid-template-columns:108px 72px minmax(0,1fr) 66px;gap:4px}.row-save{font-size:9px;padding:9px 2px}.cat-desc{font-size:12px}.cat-amount{font-size:15px}}
 .summary-back{margin:0 0 12px}
 #backToEntry{width:100%;padding:11px 14px;border:0;border-radius:9px;cursor:pointer;font-weight:700;font-size:14px}
 
-.tabs3{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.tabs3 .tab{white-space:nowrap;text-align:center;min-width:0;padding-left:5px;padding-right:5px;font-size:14px}
+.tabs3{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.tabs3 .tab{white-space:nowrap;text-align:center;min-width:0;padding-left:3px;padding-right:3px;font-size:13px;overflow:hidden;text-overflow:clip}
+@media(max-width:500px){.tabs3{gap:3px}.tabs3 .tab{font-size:10.5px;padding:11px 1px;letter-spacing:-.25px}}
 .analysis-table{width:100%;border-collapse:collapse;font-size:13px}
 .analysis-table th,.analysis-table td{padding:9px 5px;border-bottom:1px solid #285678;text-align:right;vertical-align:middle}
 .analysis-table th:first-child,.analysis-table td:first-child{text-align:left}
@@ -51,24 +42,15 @@ label{display:block;font-size:13px;opacity:.85;margin:10px 0 5px}input,select{wi
 <section id="entryScreen"><div class="card">
 <label>Data</label><input type="date" id="date"><label>Gastos por categoria</label>
 <div class="category-fields" id="categoryFields">
-  <div class="category-row"><span>🍚 Alimentação:</span><div><b>¥</b><input class="cat-amount" data-cat="Alimentação" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Alimentação" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Alimentação">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>🚗 Transporte:</span><div><b>¥</b><input class="cat-amount" data-cat="Transporte" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Transporte" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Transporte">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>🏠 Casa:</span><div><b>¥</b><input class="cat-amount" data-cat="Casa" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Casa" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Casa">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>💡 Contas:</span><div><b>¥</b><input class="cat-amount" data-cat="Contas" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Contas" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Contas">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>🛒 Compras:</span><div><b>¥</b><input class="cat-amount" data-cat="Compras" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Compras" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Compras">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>🏥 Saúde:</span><div><b>¥</b><input class="cat-amount" data-cat="Saúde" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Saúde" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Saúde">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>🎮 Lazer:</span><div><b>¥</b><input class="cat-amount" data-cat="Lazer" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Lazer" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Lazer">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>💸 Remessa:</span><div><b>¥</b><input class="cat-amount" data-cat="Remessa" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Remessa" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Remessa">REGISTRAR</button></div>
-</div>
-  <div class="category-row"><span>📦 Outros:</span><div><b>¥</b><input class="cat-amount" data-cat="Outros" type="number" inputmode="numeric" min="0" step="1" placeholder="0"><input class="cat-desc" data-cat="Outros" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Outros">REGISTRAR</button></div>
-</div>
+  <div class="category-row"><span>🍚 Alimentação:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Alimentação" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Alimentação" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Alimentação">REGISTRAR</button></div>
+  <div class="category-row"><span>🚗 Transporte:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Transporte" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Transporte" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Transporte">REGISTRAR</button></div>
+  <div class="category-row"><span>🏠 Casa:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Casa" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Casa" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Casa">REGISTRAR</button></div>
+  <div class="category-row"><span>💡 Contas:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Contas" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Contas" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Contas">REGISTRAR</button></div>
+  <div class="category-row"><span>🛒 Compras:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Compras" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Compras" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Compras">REGISTRAR</button></div>
+  <div class="category-row"><span>🏥 Saúde:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Saúde" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Saúde" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Saúde">REGISTRAR</button></div>
+  <div class="category-row"><span>🎮 Lazer:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Lazer" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Lazer" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Lazer">REGISTRAR</button></div>
+  <div class="category-row"><span>💸 Remessa:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Remessa" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Remessa" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Remessa">REGISTRAR</button></div>
+  <div class="category-row"><span>📦 Outros:</span><div class="value-wrap"><b>¥</b><input class="cat-amount" data-cat="Outros" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div><input class="cat-desc" data-cat="Outros" type="text" maxlength="60" placeholder="descrição"><button type="button" class="row-save" data-cat="Outros">REGISTRAR</button></div>
 </div>
 <input id="description" type="hidden" value="">
 </div>
